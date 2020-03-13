@@ -102,3 +102,15 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# input and models data
+
+input/
+models/
+
+# Data files
+
+*.csv
+*.h5
+*.pkl
+*.pth
