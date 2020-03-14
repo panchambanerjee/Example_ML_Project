@@ -50,6 +50,7 @@ def predict():
         predictions /= 5
 
         sub = pd.DataFrame(np.column_stack((test_idx, predictions)), columns=["id", "target"])
+        sub["id"] = sub["id"].astype(np.int32)
 
         return sub
 
