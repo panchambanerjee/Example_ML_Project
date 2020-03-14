@@ -8,16 +8,16 @@ FOLD = int(os.environ.get("FOLD"))
 
 FOLD_MAPPING = {
     0: [1, 2, 3, 4],
-    1: [2, 3, 4, 0],
-    2: [3, 4, 1, 0],
-    3: [4, 1, 0, 2],
+    1: [0, 2, 3, 4],
+    2: [0, 1, 3, 4],
+    3: [0, 1, 2, 4],
     4: [0, 1, 2, 3]
-                }
+}
 
 if __name__ == "__main__":
     df = pd.read_csv(TRAINING_DATA)
-    train_df = df[df["kfold"].isin(FOLD_MAPPING.get(FOLD))]
-    valid_df = df[df["kfold"] == FOLD]
+    train_df = df[df["kfold"].isin(FOLD_MAPPING.get(FOLD))].reset_index(drop=True)
+    valid_df = df[df["kfold"] == FOLD].reset_index(drop=True)
 
     ytrain = train_df.target.values
     yvalid = valid_df.target.values
@@ -36,8 +36,8 @@ if __name__ == "__main__":
         label_encoders.append((c, lbl))
 
     # Data is ready to train
-    clf = ensemble.RandomForestClassifier(n_jobs=-1, random_state=42)
+    clf = ensemble.RandomForestClassifier(n_jobs=-1, random_state=42, verbose=2)
     clf.fit(train_df, ytrain)
-    preds = clf.predict_proba((valid_df))[:, 1]
+    preds = clf.predict_proba(valid_df)[:, 1]
     print(preds)
 
