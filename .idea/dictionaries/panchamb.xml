@@ -2,6 +2,7 @@
   <dictionary name="panchamb">
     <words>
       <w>kfold</w>
+      <w>preds</w>
     </words>
   </dictionary>
 </component>
